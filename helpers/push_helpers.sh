@@ -29,7 +29,7 @@ tg_groupcast() {
 }
 
 tg_imagecaptioncast() {
-    "${TELEGRAM}" -i images/update.jpg -c "${OTA_GROUP}" -H \
+    "${TELEGRAM}" -i ota_scripts/images/update.jpg -c "${OTA_GROUP}" -H \
     "$(
                 for POST in "${@}"; do
                         echo "${POST}"
