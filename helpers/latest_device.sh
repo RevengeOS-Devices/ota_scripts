@@ -7,7 +7,8 @@ DEVICE=$(ls -td official_devices/*/ | head -1)
 echo $DEVICE > device
 sed -i 's|official_devices/||g' device
 sed -i 's|/||g' device
-export DEVICE=$(cat device)
+DEVICE=$(cat device)
 rm device
 rm -rf official_devices
 echo $DEVICE
+export DEVICE
