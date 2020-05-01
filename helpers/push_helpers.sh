@@ -27,3 +27,6 @@ tg_groupcast() {
 		done
     )"
 }
+
+export -f tg_groupcast
+export -f tg_channelcast
