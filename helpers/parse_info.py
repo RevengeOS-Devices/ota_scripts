@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 
 # Parse json information
 
@@ -9,7 +10,4 @@ DEVICE_JSON = os.path.join(str(DEVICE), "device.json")
 with open(DEVICE_JSON, 'r') as f:
     DEVICE_DICT = json.load(f)
 
-os.environ['DONATE_URL'] = DEVICE_DICT['donate_url']
-os.environ['FILENAME'] = DEVICE_DICT['filename']
-os.environ['URL'] = DEVICE_DICT['url']
-
+print(str(DEVICE_DICT[sys.argv[1]]))
