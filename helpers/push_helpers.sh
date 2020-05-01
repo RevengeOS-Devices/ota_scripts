@@ -2,21 +2,11 @@
 # Telegram helpers for pushing OTA
 
 # Channel & Group
-export OTA_CHANNEL=1
+export OTA_CHANNEL=-1001331597794
 export OTA_GROUP=-1001279894967
 
 # Token
 export TELEGRAM_TOKEN=${BOT_API_TOKEN}
-
-# Send to channel
-tg_channelcast() {
-    "${TELEGRAM}" -c "${OTA_CHANNEL}" -H \
-    "$(
-		for POST in "${@}"; do
-			echo "${POST}"
-		done
-    )"
-}
 
 # Send to main group
 tg_groupcast() {
@@ -29,7 +19,7 @@ tg_groupcast() {
 }
 
 tg_imagecaptioncast() {
-    "${TELEGRAM}" -i ota_scripts/images/update.jpg -c "${OTA_GROUP}" -H \
+    "${TELEGRAM}" -i ota_scripts/images/update.jpg -c "${OTA_CHANNEL}" -H \
     "$(
                 for POST in "${@}"; do
                         echo "${POST}"

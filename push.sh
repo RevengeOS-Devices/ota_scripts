@@ -28,3 +28,5 @@ tg_imagecaptioncast "New RevengeOS update available!" \
 	"Download link: <a href='${URL}'>${FILENAME}</a>" \
 	"Maintainer: https://t.me/${TELEGRAM_USERNAME}" \
 	"Donate: ${DONATE_URL}"
+
+tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${DEVICE}) in ROS News channel!" \
