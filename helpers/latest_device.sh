@@ -3,7 +3,7 @@
 
 git clone https://github.com/RevengeOS-Devices/official_devices --depth=1 official_devices
 
-DEVICE=$(ls -td official_devices/*/ | head -1)
+DEVICE=$(ls -drt official_devices/*/ | head -n1)
 echo $DEVICE > device
 sed -i 's|official_devices/||g' device
 sed -i 's|/||g' device
