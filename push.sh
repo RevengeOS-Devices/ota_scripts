@@ -2,7 +2,8 @@
 
 CHECK=$(git diff --name-only HEAD~ .)
 
-if [[ CHECK != "maintainers.json" ]]; then
+if [[ CHECK != "maintainers.json" ]];
+then
 	URL=$(python3 ota_scripts/helpers/parse_info_device.py url)
 	FILENAME=$(python3 ota_scripts/helpers/parse_info_device.py filename)
 	DONATE_URL=$(python3 ota_scripts/helpers/parse_info_device.py donate_url)
@@ -39,7 +40,7 @@ if [[ CHECK != "maintainers.json" ]]; then
 		"Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" \
 		"Donate: ${DONATE_URL}"
 
-	tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${DEVICE}) in ROS News channel!" \
+	tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${DEVICE}) in ROS News channel!"
 else
 	exit 1
 fi
