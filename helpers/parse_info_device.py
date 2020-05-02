@@ -2,7 +2,7 @@ import os
 import json
 import sys
 
-# Parse json information
+# Parse device json information
 
 DEVICE = os.getenv('DEVICE')
 DEVICE_JSON = os.path.join(str(DEVICE), "device.json")
