@@ -4,8 +4,12 @@ CHECK=$(git diff --name-only HEAD~ .)
 
 if [[ CHECK == "maintainers.json" ]]
 then
+	echo $CHECK
+	echo "Not pushing due to no new update"
 	exit 1
 else
+	echo $CHECK
+	echo "Pushing new update"
 	URL=$(python3 ota_scripts/helpers/parse_info_device.py url)
 	FILENAME=$(python3 ota_scripts/helpers/parse_info_device.py filename)
 	DONATE_URL=$(python3 ota_scripts/helpers/parse_info_device.py donate_url)
