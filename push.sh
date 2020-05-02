@@ -10,9 +10,6 @@ MAINTAINER=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} mai
 TELEGRAM_USERNAME=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} telegram)
 XDA_THREAD=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} xda_thread)
 
-if not XDA_THREAD:
-	XDA_THREAD = "(no XDA thread)"
-
 # Make it look pretty
 sed -i -e 's/^/- /g' changelog.txt
 sed -i -e 's/^/- /g' ${DEVICE}/changelog.txt
