@@ -8,6 +8,10 @@ UNIX_DATETIME=$(python3 ota_scripts/helpers/parse_info.py datetime)
 ROSVERSION=$(python3 ota_scripts/helpers/parse_info.py version)
 TELEGRAM_USERNAME=$(python3 ota_scripts/helpers/parse_info.py tgusername)
 
+# Make it look pretty
+sed -i -e 's/^/- /g' changelog.txt
+sed -i -e 's/^/- /g' ${DEVICE}/changelog.txt
+
 SOURCELOG=$(cat changelog.txt)
 DEVICELOG=$(cat ${DEVICE}/changelog.txt)
 
