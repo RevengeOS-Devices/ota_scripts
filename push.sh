@@ -1,12 +1,17 @@
 #!/bin/bash
 
-DEVICENAME=$(python3 ota_scripts/helpers/parse_info.py device_name)
-URL=$(python3 ota_scripts/helpers/parse_info.py url)
-FILENAME=$(python3 ota_scripts/helpers/parse_info.py filename)
-DONATE_URL=$(python3 ota_scripts/helpers/parse_info.py donate_url)
-UNIX_DATETIME=$(python3 ota_scripts/helpers/parse_info.py datetime)
-ROSVERSION=$(python3 ota_scripts/helpers/parse_info.py version)
-TELEGRAM_USERNAME=$(python3 ota_scripts/helpers/parse_info.py tgusername)
+URL=$(python3 ota_scripts/helpers/parse_info_device.py url)
+FILENAME=$(python3 ota_scripts/helpers/parse_info_device.py filename)
+DONATE_URL=$(python3 ota_scripts/helpers/parse_info_device.py donate_url)
+UNIX_DATETIME=$(python3 ota_scripts/helpers/parse_info_device.py datetime)
+ROSVERSION=$(python3 ota_scripts/helpers/parse_info_device.py version)
+DEVICENAME=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} name)
+MAINTAINER=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} maintainer)
+TELEGRAM_USERNAME=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} telegram)
+XDA_THREAD=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} xda_thread)
+
+if not XDA_THREAD:
+	XDA_THREAD = "(no XDA thread)"
 
 # Make it look pretty
 sed -i -e 's/^/- /g' changelog.txt
@@ -19,6 +24,7 @@ DATETIME=$(date -d @${UNIX_DATETIME})
 
 tg_imagecaptioncast "New RevengeOS update available!" \
 	"Device: ${DEVICENAME} (<code>${DEVICE}</code>)" \
+	"XDA thread: ${XDA_THREAD}" \
 	" " \
 	"RevengeOS Version: ${ROSVERSION}" \
 	"Build date: ${DATETIME}" \
@@ -30,7 +36,7 @@ tg_imagecaptioncast "New RevengeOS update available!" \
 	"${SOURCELOG}" \
         " " \
 	"Download link: <a href='${URL}'>${FILENAME}</a>" \
-	"Maintainer: https://t.me/${TELEGRAM_USERNAME}" \
+	"Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" \
 	"Donate: ${DONATE_URL}"
 
 tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${DEVICE}) in ROS News channel!" \
