@@ -6,6 +6,7 @@ if [[ $CHECK = "maintainers.json" ]];
 then
 	echo $CHECK
 	echo "Not pushing due to no new update"
+	tg_groupcast "Not pushing announcement - maintainers.json was the only file modified in latest push."
 	exit 1
 fi
 
