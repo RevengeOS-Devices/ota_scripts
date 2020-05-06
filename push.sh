@@ -2,11 +2,11 @@
 
 CHECK=$(git diff --name-only HEAD~1 .)
 
-if [[ $CHECK = "maintainers.json" ]];
+if [[ $CHECK = "maintainers.json" ]] || [[ $CHECK = "changelog.txt" ]];
 then
 	echo $CHECK
 	echo "Not pushing due to no new update"
-	tg_groupcast "Not pushing announcement - maintainers.json was the only file modified in latest push."
+	tg_groupcast "Not pushing announcement - maintainers.json, or changelog.txt was the only file modified in latest push."
 	exit 1
 fi
 
