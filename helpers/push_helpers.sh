@@ -18,8 +18,8 @@ tg_groupcast() {
     )"
 }
 
-tg_imagecaptioncast() {
-    "${TELEGRAM}" -i ota_scripts/images/update.jpg -c "${OTA_CHANNEL}" -H \
+tg_channelcast() {
+    "${TELEGRAM}" -c "${OTA_CHANNEL}" -H \
     "$(
                 for POST in "${@}"; do
                         echo "${POST}"
@@ -29,4 +29,3 @@ tg_imagecaptioncast() {
 
 export -f tg_groupcast
 export -f tg_channelcast
-export -f tg_imagecaptioncast
