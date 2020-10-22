@@ -2,8 +2,8 @@
 # Telegram helpers for pushing OTA
 
 # Channel & Group
-export OTA_CHANNEL=-1001331597794
-export OTA_GROUP=-1001279894967
+export OTA_CHANNEL=${GRPID}
+export OTA_GROUP=${GRPID}
 
 # Token
 export TELEGRAM_TOKEN=${BOT_API_TOKEN}
