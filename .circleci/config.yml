@@ -9,9 +9,8 @@ jobs:
           command: |
            apt-get -y update && apt-get -y upgrade && apt-get -y install python3 git curl wget repo python3-pip
            pip3 install python-telegram
-           git clone https://github.com/Chityanj/ota_scripts ota/
-           cd ota/
-           ./push.sh
+           git clone https://github.com/Giovix92/ota_scripts
+           . ota_scripts/push.sh
 workflows:
   version: 2.1
   cooking:
