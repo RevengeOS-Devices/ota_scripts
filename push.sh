@@ -1,49 +1,45 @@
 #!/bin/bash
+# Giovix92 was here, 31/10/2020
 
-CHECK=$(git diff --name-only HEAD~1 .)
+source $(pwd)/helpers/push_helpers.sh
 
-if [[ $CHECK = "maintainers.json" ]] || [[ $CHECK = "changelog.txt" ]];
-then
-	echo $CHECK
-	echo "Not pushing due to no new update"
-	tg_groupcast "Not pushing announcement - maintainers.json, or changelog.txt was the only file modified in latest push."
-	exit 1
-fi
+# Export TARGET_DEVICE from last updated device inside official_devices
+TARGET_DEVICE=$(bash $(pwd)/helpers/latest_device.sh)
 
-URL=$(python3 ota_scripts/helpers/parse_info_device.py url)
-FILENAME=$(python3 ota_scripts/helpers/parse_info_device.py filename)
-DONATE_URL=$(python3 ota_scripts/helpers/parse_info_device.py donate_url)
-UNIX_DATETIME=$(python3 ota_scripts/helpers/parse_info_device.py datetime)
-ROSVERSION=$(python3 ota_scripts/helpers/parse_info_device.py version)
-DEVICENAME=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} name)
-MAINTAINER=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} maintainer)
-TELEGRAM_USERNAME=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} telegram)
-XDA_THREAD=$(python3 ota_scripts/helpers/parse_info_maintainers.py ${DEVICE} xda_thread)
+# Fetch device.json from our github repo
+wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/$TARGET_DEVICE/device.json
+URL=$(jq ".website_url" device.json)
+FILENAME=$(jq ".filename" device.json)
+DONATE_URL=$(jq ".donate_url" device.json)
+UNIX_DATETIME=$(jq ".datetime" device.json)
+ROSVERSION=$(jq ".version" device.json)
+
+# Fetch maintainer's info by looking for target_device inside maintainers.json
+# Also fetch it dynamically from our github repo
+wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/maintainers.json
+DEVICENAME=$(jq ".$TARGET_DEVICE.name" maintainers.json)
+MAINTAINER=$(jq ".$TARGET_DEVICE.maintainer" maintainers.json)
+TELEGRAM_USERNAME=$(jq ".$TARGET_DEVICE.telegram" maintainers.json)
+XDA_THREAD=$(jq ".$TARGET_DEVICE.xda_thread" maintainers.json)
+
+# Fetch device's changelog too
+wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/$TARGET_DEVICE/changelog.txt
+
+# Rename it to changelog_$TARGET_DEVICE.txt in order to avoid issues with source changelog
+mv changelog.txt changelog_$TARGET_DEVICE.txt
+
+# Fetch source changelog
+wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/changelog.txt
 
 # Make it look pretty
 sed -i -e 's/^/- /g' changelog.txt
-sed -i -e 's/^/- /g' ${DEVICE}/changelog.txt
+sed -i -e 's/^/- /g' changelog_$TARGET_DEVICE.txt
 
 SOURCELOG=$(cat changelog.txt)
-DEVICELOG=$(cat ${DEVICE}/changelog.txt)
+DEVICELOG=$(cat changelog_$TARGET_DEVICE.txt)
 
 DATETIME=$(date -d @${UNIX_DATETIME})
 
-tg_channelcast "New RevengeOS update available!" \
-	"Device: ${DEVICENAME} (<code>${DEVICE}</code>)" \
-	"XDA thread: ${XDA_THREAD}" \
-	" " \
-	"RevengeOS Version: ${ROSVERSION}" \
-	"Build date: ${DATETIME}" \
-	" " \
-       	"Device changelog:" \
-        "${DEVICELOG}" \
-       	" " \
-	"Source changelog:" \
-	"${SOURCELOG}" \
-        " " \
-	"Download link: <a href='${URL}'>${FILENAME}</a>" \
-	"Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" \
-	"Donate: ${DONATE_URL}"
+tg_groupcast "New RevengeOS update available!" "Device: ${DEVICENAME} (<code>${DEVICE}</code>)" "XDA thread: ${XDA_THREAD}" " " "RevengeOS Version: ${ROSVERSION}" "Build date: ${DATETIME}" " " "Device changelog:" "${DEVICELOG}" " " "Source changelog:" "${SOURCELOG}" " " "Download link: <a href='${URL}'>${FILENAME}</a>" "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" "Donate: ${DONATE_URL}"
 
 tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${DEVICE}) in ROS News channel!"
