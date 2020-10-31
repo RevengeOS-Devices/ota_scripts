@@ -8,19 +8,19 @@ TARGET_DEVICE=$(bash $(pwd)/helpers/latest_device.sh)
 
 # Fetch device.json from our github repo
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/$TARGET_DEVICE/device.json
-URL=$(jq ".website_url" device.json)
-FILENAME=$(jq ".filename" device.json)
-DONATE_URL=$(jq ".donate_url" device.json)
-UNIX_DATETIME=$(jq ".datetime" device.json)
-ROSVERSION=$(jq ".version" device.json)
+URL=$(jq ".website_url" device.json | sed 's/"//g')
+FILENAME=$(jq ".filename" device.json | sed 's/"//g')
+DONATE_URL=$(jq ".donate_url" device.json | sed 's/"//g')
+UNIX_DATETIME=$(jq ".datetime" device.json | sed 's/"//g')
+ROSVERSION=$(jq ".version" device.json | sed 's/"//g')
 
 # Fetch maintainer's info by looking for target_device inside maintainers.json
 # Also fetch it dynamically from our github repo
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/maintainers.json
-DEVICENAME=$(jq ".$TARGET_DEVICE.name" maintainers.json)
-MAINTAINER=$(jq ".$TARGET_DEVICE.maintainer" maintainers.json)
-TELEGRAM_USERNAME=$(jq ".$TARGET_DEVICE.telegram" maintainers.json)
-XDA_THREAD=$(jq ".$TARGET_DEVICE.xda_thread" maintainers.json)
+DEVICENAME=$(jq ".$TARGET_DEVICE.name" maintainers.json | sed 's/"//g')
+MAINTAINER=$(jq ".$TARGET_DEVICE.maintainer" maintainers.json | sed 's/"//g')
+TELEGRAM_USERNAME=$(jq ".$TARGET_DEVICE.telegram" maintainers.json | sed 's/"//g')
+XDA_THREAD=$(jq ".$TARGET_DEVICE.xda_thread" maintainers.json | sed 's/"//g')
 
 # Fetch device's changelog too
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/$TARGET_DEVICE/changelog.txt
@@ -40,6 +40,6 @@ DEVICELOG=$(cat changelog_$TARGET_DEVICE.txt)
 
 DATETIME=$(date -d @${UNIX_DATETIME})
 
-tg_groupcast "New RevengeOS update available!" "Device: ${DEVICENAME} (<code>${DEVICE}</code>)" "XDA thread: ${XDA_THREAD}" " " "RevengeOS Version: ${ROSVERSION}" "Build date: ${DATETIME}" " " "Device changelog:" "${DEVICELOG}" " " "Source changelog:" "${SOURCELOG}" " " "Download link: <a href='${URL}'>${FILENAME}</a>" "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" "Donate: ${DONATE_URL}"
+tg_groupcast "New RevengeOS update available!" "Device: ${DEVICENAME} (<code>${TARGET_DEVICE}</code>)" "XDA thread: ${XDA_THREAD}" " " "RevengeOS Version: ${ROSVERSION}" "Build date: ${DATETIME}" " " "Device changelog:" "${DEVICELOG}" " " "Source changelog:" "${SOURCELOG}" " " "Download link: <a href='${URL}'>${FILENAME}</a>" "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" "Donate: ${DONATE_URL}"
 
-tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${DEVICE}) in ROS News channel!"
+tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${TARGET_DEVICE}) in ROS News channel!"
