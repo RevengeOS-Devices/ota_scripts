@@ -22,6 +22,11 @@ MAINTAINER=$(jq ".$TARGET_DEVICE.maintainer" maintainers.json | sed 's/"//g')
 TELEGRAM_USERNAME=$(jq ".$TARGET_DEVICE.telegram" maintainers.json | sed 's/"//g')
 XDA_THREAD=$(jq ".$TARGET_DEVICE.xda_thread" maintainers.json | sed 's/"//g')
 
+# Set DONATE_URL with a default value if empty
+if [ "$DONATE_URL" == "" ]; then
+	DONATE_URL=$(echo "https://paypal.me/lucchetto")
+fi
+
 # Fetch device's changelog too
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/$TARGET_DEVICE/changelog.txt
 
