@@ -13,7 +13,7 @@ jobs:
            git config --global color.ui false
            git clone https://github.com/fabianonline/telegram.sh telegram_bin/
            export TELEGRAM=$(pwd)/telegram_bin/telegram
-           git clone https://github.com/Giovix92/ota_scripts
+           git clone https://github.com/RevengeOS-Devices/ota_scripts
            cd ota_scripts && ./push.sh
 workflows:
   version: 2.1
