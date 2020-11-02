@@ -6,6 +6,12 @@ source $(pwd)/helpers/push_helpers.sh
 # Export TARGET_DEVICE from last updated device inside official_devices
 TARGET_DEVICE=$(bash $(pwd)/helpers/latest_device.sh)
 
+# Abort if TARGET_DEVICE equals to changelog.txt or maintainers.json
+if [ "$TARGET_DEVICE" == "maintainers.json" ] || [ "$TARGET_DEVICE" == "changelog.txt" ]; then
+	tg_groupcast "Only maintainers.json or changelog.txt has been updated. Ignoring."
+	exit
+fi
+
 # Fetch device.json from our github repo
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/$TARGET_DEVICE/device.json
 URL=$(jq ".url" device.json | sed 's/"//g')
