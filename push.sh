@@ -13,6 +13,7 @@ FILENAME=$(jq ".filename" device.json | sed 's/"//g')
 DONATE_URL=$(jq ".donate_url" device.json | sed 's/"//g')
 UNIX_DATETIME=$(jq ".datetime" device.json | sed 's/"//g')
 ROSVERSION=$(jq ".version" device.json | sed 's/"//g')
+MD5HASH=$(jq ".filehash" device.json | sed 's/"//g')
 
 # Fetch maintainer's info by looking for target_device inside maintainers.json
 # Also fetch it dynamically from our github repo
@@ -45,6 +46,6 @@ DEVICELOG=$(cat changelog_$TARGET_DEVICE.txt)
 
 DATETIME=$(date -d @${UNIX_DATETIME})
 
-tg_groupcast "New RevengeOS update available!" "Device: ${DEVICENAME} (<code>${TARGET_DEVICE}</code>)" "XDA thread: ${XDA_THREAD}" " " "RevengeOS Version: ${ROSVERSION}" "Build date: ${DATETIME}" " " "Device changelog:" "${DEVICELOG}" " " "Source changelog:" "${SOURCELOG}" " " "Download link: <a href='${URL}'>${FILENAME}</a>" "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" "Donate: ${DONATE_URL}"
+tg_groupcast "New RevengeOS update available!" "Device: ${DEVICENAME} (<code>${TARGET_DEVICE}</code>)" "XDA thread: ${XDA_THREAD}" " " "RevengeOS Version: ${ROSVERSION}" "Build date: ${DATETIME}" " " "Device changelog:" "${DEVICELOG}" " " "Source changelog:" "${SOURCELOG}" " " "Download link: <a href='${URL}'>${FILENAME}</a>" "MD5: (<code>${MD5HASH}</code>)" "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" "Donate: ${DONATE_URL}"
 
 tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${TARGET_DEVICE}) in ROS News channel!"
