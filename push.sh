@@ -46,6 +46,22 @@ DEVICELOG=$(cat changelog_$TARGET_DEVICE.txt)
 
 DATETIME=$(date -d @${UNIX_DATETIME})
 
-tg_groupcast "New RevengeOS update available!" "Device: ${DEVICENAME} (<code>${TARGET_DEVICE}</code>)" "XDA thread: ${XDA_THREAD}" " " "RevengeOS Version: ${ROSVERSION}" "Build date: ${DATETIME}" " " "Device changelog:" "${DEVICELOG}" " " "Source changelog:" "${SOURCELOG}" " " "Download link: <a href='${URL}'>${FILENAME}</a>" "MD5: (<code>${MD5HASH}</code>)" "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" "Donate: ${DONATE_URL}"
+tg_groupcast "New RevengeOS update available!" \
+ "Device: ${DEVICENAME} (<code>${TARGET_DEVICE}</code>)" \
+ "XDA thread: ${XDA_THREAD}" \
+ " " \
+ "RevengeOS Version: ${ROSVERSION}" \
+ "Build date: ${DATETIME}" \
+ " " \
+ "Device changelog:" \
+ "${DEVICELOG}" \
+ " " \
+ "Source changelog:" \
+ "${SOURCELOG}" \
+ " " \
+ "Download link: <a href='${URL}'>${FILENAME}</a>" \
+ "MD5: (<code>${MD5HASH}</code>)" \
+ "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" \
+ "Donate: ${DONATE_URL}"
 
 tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${TARGET_DEVICE}) in ROS News channel!"
