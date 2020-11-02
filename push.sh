@@ -8,7 +8,7 @@ TARGET_DEVICE=$(bash $(pwd)/helpers/latest_device.sh)
 
 # Fetch device.json from our github repo
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/$TARGET_DEVICE/device.json
-URL=$(jq ".website_url" device.json | sed 's/"//g')
+URL=$(jq ".url" device.json | sed 's/"//g')
 FILENAME=$(jq ".filename" device.json | sed 's/"//g')
 DONATE_URL=$(jq ".donate_url" device.json | sed 's/"//g')
 UNIX_DATETIME=$(jq ".datetime" device.json | sed 's/"//g')
