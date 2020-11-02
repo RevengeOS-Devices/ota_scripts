@@ -46,7 +46,7 @@ DEVICELOG=$(cat changelog_$TARGET_DEVICE.txt)
 
 DATETIME=$(date -d @${UNIX_DATETIME})
 
-tg_groupcast "New RevengeOS update available!" \
+tg_channelcast "New RevengeOS update available!" \
  "Device: ${DEVICENAME} (<code>${TARGET_DEVICE}</code>)" \
  "XDA thread: ${XDA_THREAD}" \
  " " \

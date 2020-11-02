@@ -2,7 +2,7 @@
 # Telegram helpers for pushing OTA
 
 # Channel & Group
-export OTA_CHANNEL=${GRPID}
+export OTA_CHANNEL=${CHNLID}
 export OTA_GROUP=${GRPID}
 
 # Token
