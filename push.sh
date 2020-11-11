@@ -65,7 +65,7 @@ tg_channelcast "New RevengeOS update available!" \
  "Source changelog:" \
  "${SOURCELOG}" \
  " " \
- "Download link: <a href='${URL}'>${FILENAME}</a>" \
+ "Download link: <a href='https://download.revengeos.com/download/${TARGET_DEVICE}'>${FILENAME}</a>" \
  "MD5: (<code>${MD5HASH}</code>)" \
  "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" \
  "Donate: ${DONATE_URL}"
