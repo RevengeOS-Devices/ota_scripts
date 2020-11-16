@@ -14,7 +14,11 @@ jobs:
            git clone https://github.com/fabianonline/telegram.sh telegram_bin/
            export TELEGRAM=$(pwd)/telegram_bin/telegram
            echo "Sleepin'..."
-           sleep 600
+           sleep 180
+           echo "Sleepin' ..."
+           sleep 360
+           echo "Sleepin' again..."
+           sleep 60
            git clone https://github.com/RevengeOS-Devices/ota_scripts
            cd ota_scripts && ./push.sh
 workflows:
