@@ -14,7 +14,7 @@ fi
 
 # Fetch device.json from our github repo
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/$TARGET_DEVICE/device.json
-URL=$(jq ".download_new" device.json | sed 's/"//g')
+URL="https://download.revengeos.com/download/${TARGET_DEVICE}"
 FILENAME=$(jq ".filename" device.json | sed 's/"//g')
 DONATE_URL=$(jq ".donate_url" device.json | sed 's/"//g')
 UNIX_DATETIME=$(jq ".datetime" device.json | sed 's/"//g')
