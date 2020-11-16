@@ -13,6 +13,8 @@ jobs:
            git config --global color.ui false
            git clone https://github.com/fabianonline/telegram.sh telegram_bin/
            export TELEGRAM=$(pwd)/telegram_bin/telegram
+           echo "Sleepin'..."
+           sleep 600
            git clone https://github.com/RevengeOS-Devices/ota_scripts
            cd ota_scripts && ./push.sh
 workflows:
