@@ -68,6 +68,8 @@ tg_channelcast "New RevengeOS update available!" \
  "Download link: <a href='${URL}'>${FILENAME}</a>" \
  "MD5: (<code>${MD5HASH}</code>)" \
  "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" \
+ "Please, take a seat, and read this <a href='https://blog.revengeos.com/we-need-developers/'>message</a>." \
+ " " \
  "Donate: ${DONATE_URL}"
 
 tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${TARGET_DEVICE}) in ROS News channel!"
