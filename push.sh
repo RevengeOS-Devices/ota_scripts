@@ -48,13 +48,11 @@ wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master
 # Rename it to changelog_$TARGET_DEVICE.txt in order to avoid issues with source changelog
 mv changelog.txt changelog_$TARGET_DEVICE.txt
 
+# Fetch device's notes, if any.
+wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/$TARGET_DEVICE/notes.txt && cat notes.txt >> notes_$TARGET_DEVICE.txt
+
 # Fetch source changelog
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/changelog.txt
-
-# Check if any note exists.
-if [ -e "$(pwd)/notes.txt" ]; then
-	cat notes.txt >> notes_$TARGET_DEVICE.txt
-fi
 
 # Make it look pretty
 sed -i -e 's/^/- /g' changelog.txt
