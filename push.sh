@@ -1,5 +1,5 @@
 #!/bin/bash
-# Giovix92 was here, 31/10/2020
+# Giovix92 was here, 20/03/2021 owo
 
 source $(pwd)/helpers/push_helpers.sh
 
@@ -20,6 +20,7 @@ DONATE_URL=$(jq ".donate_url" device.json | sed 's/"//g')
 UNIX_DATETIME=$(jq ".datetime" device.json | sed 's/"//g')
 ROSVERSION=$(jq ".version" device.json | sed 's/"//g')
 MD5HASH=$(jq ".filehash" device.json | sed 's/"//g')
+CLEAN_FLASH=$(jq ".clean_flash" device.json | sed 's/"//g')
 
 # Fetch maintainer's info by looking for target_device inside maintainers.json
 # Also fetch it dynamically from our github repo
@@ -34,6 +35,13 @@ if [ "$DONATE_URL" == "" ]; then
 	DONATE_URL=$(echo "https://paypal.me/lucchetto")
 fi
 
+# Check if CLEAN_FLASH is empty and/or set with yes/no.
+if [ "$CLEAN_FLASH" == "" ] || [ "$CLEAN_FLASH" == "no" ]; then
+	echo "Dirty flash possible!" > notes_$TARGET_DEVICE.txt
+elif [ "$CLEAN_FLASH" == "yes" ]; then
+	echo "Clean flash highly advised!" > notes_$TARGET_DEVICE.txt
+fi
+
 # Fetch device's changelog too
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/$TARGET_DEVICE/changelog.txt
 
@@ -43,12 +51,19 @@ mv changelog.txt changelog_$TARGET_DEVICE.txt
 # Fetch source changelog
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/changelog.txt
 
+# Check if any note exists.
+if [ -e "$(pwd)/notes.txt" ]; then
+	cat notes.txt >> notes_$TARGET_DEVICE.txt
+fi
+
 # Make it look pretty
 sed -i -e 's/^/- /g' changelog.txt
 sed -i -e 's/^/- /g' changelog_$TARGET_DEVICE.txt
+sed -i -e 's/^/- /g' notes_$TARGET_DEVICE.txt
 
 SOURCELOG=$(cat changelog.txt)
 DEVICELOG=$(cat changelog_$TARGET_DEVICE.txt)
+NOTES=$(cat notes_$TARGET_DEVICE.txt)
 
 DATETIME=$(date -d @${UNIX_DATETIME})
 
@@ -64,6 +79,9 @@ tg_channelcast "New RevengeOS update available!" \
  " " \
  "Source changelog:" \
  "${SOURCELOG}" \
+ " " \
+ "Notes:" \
+ "${NOTES}" \
  " " \
  "Download link: <a href='${URL}'>${FILENAME}</a>" \
  "MD5: (<code>${MD5HASH}</code>)" \
