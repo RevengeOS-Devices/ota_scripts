@@ -7,10 +7,9 @@ source $(pwd)/helpers/push_helpers.sh
 TARGET_DEVICE=$(bash $(pwd)/helpers/latest_device.sh)
 
 # Just a lil safety check
-if [ "$DEVICE" == "$TARGET_DEVICE" ]; then
-	echo "Continuing, safety check passed."
-else
-	tg_groupcast "Something's wrong with the script. Device: ${DEVICE}, Target device: ${TARGET_DEVICE}."
+FLAG=$(cat file)
+if [ "$FLAG" == "0" ]; then
+	tg_groupcast "Not pushing, only core files updated."
 	exit
 fi
 
@@ -21,9 +20,10 @@ if [ "$TARGET_DEVICE" == "maintainers.json" ] || [ "$TARGET_DEVICE" == "changelo
 fi
 
 # Another safety check
-FLAG=$(cat $(pwd)/file)
-if [ "$FLAG" == "0" ]; then
-	tg_groupcast "Not pushing, only core files updated."
+if [ "$DEVICE" == "$TARGET_DEVICE" ]; then
+	echo "Continuing, safety check passed."
+else
+	tg_groupcast "Something's wrong with the script. Device: ${DEVICE}, Target device: ${TARGET_DEVICE}."
 	exit
 fi
 
