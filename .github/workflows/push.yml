@@ -2,7 +2,9 @@ name: Push to RevengeOS News
 on: [push]
     
 env:
- username: RevengeOS-Devices
+ TELEGRAM_TOKEN: ${{ secrets.BOT_API_TOKEN }}
+ OTA_GROUP: ${{ secrets.GRPID }}
+ OTA_CHANNEL: ${{ secrets.CHNLID }}
 
 jobs:
   build:
@@ -17,11 +19,5 @@ jobs:
            git config --global color.ui false
            git clone https://github.com/fabianonline/telegram.sh telegram_bin/
            export TELEGRAM=$(pwd)/telegram_bin/telegram
-           echo "Sleepin'..."
-           sleep 180
-           echo "Sleepin' ..."
-           sleep 360
-           echo "Sleepin' again..."
-           sleep 60
            git clone https://github.com/RevengeOS-Devices/ota_scripts
            cd ota_scripts && ./push.sh

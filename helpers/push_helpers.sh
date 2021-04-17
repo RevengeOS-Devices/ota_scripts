@@ -1,13 +1,6 @@
 #!/bin/bash
 # Telegram helpers for pushing OTA
 
-# Channel & Group
-export OTA_CHANNEL=${CHNLID}
-export OTA_GROUP=${GRPID}
-
-# Token
-export TELEGRAM_TOKEN=${BOT_API_TOKEN}
-
 # Send to main group
 tg_groupcast() {
     "${TELEGRAM}" -c "${OTA_GROUP}" -H \
