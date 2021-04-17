@@ -1,0 +1,27 @@
+name: Push to RevengeOS News
+on: [push]
+    
+env:
+ username: RevengeOS-Devices
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+       - name: Push
+         continue-on-error: true
+         run: |
+           apt-get -y update && apt-get -y upgrade && apt-get -y install git curl wget repo jq
+           git config --global user.name "Giovix92"
+           git config --global user.email "ggualtierone@gmail.com"
+           git config --global color.ui false
+           git clone https://github.com/fabianonline/telegram.sh telegram_bin/
+           export TELEGRAM=$(pwd)/telegram_bin/telegram
+           echo "Sleepin'..."
+           sleep 180
+           echo "Sleepin' ..."
+           sleep 360
+           echo "Sleepin' again..."
+           sleep 60
+           git clone https://github.com/RevengeOS-Devices/ota_scripts
+           cd ota_scripts && ./push.sh

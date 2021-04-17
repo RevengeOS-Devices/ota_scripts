@@ -6,9 +6,24 @@ source $(pwd)/helpers/push_helpers.sh
 # Export TARGET_DEVICE from last updated device inside official_devices
 TARGET_DEVICE=$(bash $(pwd)/helpers/latest_device.sh)
 
+# Just a lil safety check
+if [ "$DEVICE" == "$TARGET_DEVICE" ]; then
+	echo "Continuing, safety check passed."
+else
+	tg_groupcast "Something's wrong with the script. Device: ${DEVICE}, Target device: ${TARGET_DEVICE}."
+	exit
+fi
+
 # Abort if TARGET_DEVICE equals to changelog.txt or maintainers.json
 if [ "$TARGET_DEVICE" == "maintainers.json" ] || [ "$TARGET_DEVICE" == "changelog.txt" ]; then
 	tg_groupcast "Only maintainers.json or changelog.txt has been updated. Ignoring."
+	exit
+fi
+
+# Another safety check
+FLAG=$(cat $(pwd)/file)
+if [ "$FLAG" == "0" ]; then
+	tg_groupcast "Not pushing, only core files updated."
 	exit
 fi
 
@@ -64,6 +79,11 @@ DEVICELOG=$(cat changelog_$TARGET_DEVICE.txt)
 NOTES=$(cat notes_$TARGET_DEVICE.txt)
 
 DATETIME=$(date -d @${UNIX_DATETIME})
+
+if [ "$DEVICENAME" == "" ] || [ "$TARGET_DEVICE" == "" ]; then
+	tg_groupcast "Infos are not parsed properly! Something's missing. Will not push to the channel."
+	exit
+fi
 
 tg_channelcast "New RevengeOS update available!" \
  "Device: ${DEVICENAME} (<code>${TARGET_DEVICE}</code>)" \
