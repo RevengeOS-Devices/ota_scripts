@@ -15,8 +15,15 @@ fi
 # Just a lil safety check
 FLAG=$(cat file)
 if [ "$FLAG" == "0" ]; then
-        tg_groupcast "Not pushing, only core files updated."
-        exit
+	tg_groupcast "Not pushing, only core files updated."
+    exit
+elif [ "$FLAG" == "1" ]; then
+	echo "Pushing right now, won't sleep!"
+else
+    echo "Sleepin'..."
+	sleep 300
+	echo "Sleepin'..."
+	sleep 300
 fi
 
 # Fetch device.json from our github repo

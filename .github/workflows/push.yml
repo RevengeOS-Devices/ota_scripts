@@ -10,12 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-       - name: Sleep for 10m
-         uses: jakejarvis/wait-action@master
-         with:
-           time: '600s'
-       - name: Push
-         continue-on-error: false
+       - name: Sleep for 10m (if needed) and push
          run: |
            sudo -E apt-get -y update && apt-get -y upgrade && apt-get -y install git curl wget repo jq
            git config --global user.name "Giovix92"
