@@ -79,27 +79,23 @@ NOTES=$(cat notes_$TARGET_DEVICE.txt)
 
 DATETIME=$(date -d @${UNIX_DATETIME})
 
-tg_channelcast "New RevengeOS update available!" \
- "Device: ${DEVICENAME} (<code>${TARGET_DEVICE}</code>)" \
- "XDA thread: ${XDA_THREAD}" \
- " " \
- "RevengeOS Version: ${ROSVERSION}" \
+tg_channelcast "<b>New build available for ${TARGET_DEVICE}</b>" \
+ "Device: ${DEVICENAME}" \
  "Build date: ${DATETIME}" \
+ "RevengeOS version: ${ROSVERSION}" \
  " " \
- "Device changelog:" \
+ "Changelog:" \
  "${DEVICELOG}" \
- " " \
- "Source changelog:" \
- "${SOURCELOG}" \
  " " \
  "Notes:" \
  "${NOTES}" \
  " " \
- "Download link: <a href='${URL}'>${FILENAME}</a>" \
- "MD5: (<code>${MD5HASH}</code>)" \
- "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" \
- "Please, take a seat, and read this <a href='https://blog.revengeos.com/we-need-developers/'>message</a>." \
+ "Download: <a href='${URL}'>${FILENAME}</a>" \
+ "MD5 checksum: (<code>${MD5HASH}</code>)" \
+ "XDA thread: <a href='${XDA_THREAD}'>Tap here</a>" \
  " " \
+ "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" \
+ "Read: <a href='https://blog.revengeos.com/we-need-developers/'>Tap here</a>" \
  "Donate: ${DONATE_URL}"
 
-tg_groupcast "OTA announcement pushed for ${DEVICENAME} (${TARGET_DEVICE}) in ROS News channel!"
+tg_groupcast "Pushed release announcement for ${DEVICENAME} (${TARGET_DEVICE}) in RevengeOS News."
