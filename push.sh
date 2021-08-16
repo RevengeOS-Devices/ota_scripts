@@ -39,6 +39,7 @@ CLEAN_FLASH=$(jq ".clean_flash" device.json | sed 's/"//g')
 # Fetch maintainer's info by looking for target_device inside maintainers.json
 # Also fetch it dynamically from our github repo
 wget https://raw.githubusercontent.com/RevengeOS-Devices/official_devices/master/maintainers.json
+BRANDNAME=$(jq ".$TARGET_DEVICE.brand" maintainers.json | sed 's/"//g')
 DEVICENAME=$(jq ".$TARGET_DEVICE.name" maintainers.json | sed 's/"//g')
 MAINTAINER=$(jq ".$TARGET_DEVICE.maintainer" maintainers.json | sed 's/"//g')
 TELEGRAM_USERNAME=$(jq ".$TARGET_DEVICE.telegram" maintainers.json | sed 's/"//g')
@@ -80,7 +81,7 @@ NOTES=$(cat notes_$TARGET_DEVICE.txt)
 DATETIME=$(date -d @${UNIX_DATETIME})
 
 tg_channelcast "<b>New build available for ${TARGET_DEVICE}</b>" \
- "Device: ${DEVICENAME}" \
+ "Device: ${BRANDNAME}" ${DEVICENAME}" \
  "Build date: ${DATETIME}" \
  "RevengeOS version: ${ROSVERSION}" \
  " " \
