@@ -81,7 +81,7 @@ NOTES=$(cat notes_$TARGET_DEVICE.txt)
 DATETIME=$(date -d @${UNIX_DATETIME})
 
 tg_channelcast "<b>New build available for ${TARGET_DEVICE}</b>" \
- "Device: ${BRANDNAME}" ${DEVICENAME}" \
+ "Device: ${BRANDNAME} ${DEVICENAME}" \
  "Build date: ${DATETIME}" \
  "RevengeOS version: ${ROSVERSION}" \
  " " \
