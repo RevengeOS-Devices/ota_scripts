@@ -82,8 +82,7 @@ DATETIME=$(date -d @${UNIX_DATETIME})
 
 tg_channelcast "<b>New build available for ${TARGET_DEVICE}</b>" \
  "Device: ${BRANDNAME} ${DEVICENAME}" \
- "Build date: ${DATETIME}" \
- "RevengeOS version: ${ROSVERSION}" \
+ "Version and date: ${ROSVERSION} ${DATETIME}" \
  " " \
  "Changelog:" \
  "${DEVICELOG}" \
@@ -94,9 +93,8 @@ tg_channelcast "<b>New build available for ${TARGET_DEVICE}</b>" \
  "Download: <a href='${URL}'>${FILENAME}</a>" \
  "MD5 checksum: (<code>${MD5HASH}</code>)" \
  "XDA thread: <a href='${XDA_THREAD}'>Tap here</a>" \
- " " \
- "Maintainer: ${MAINTAINER} (@${TELEGRAM_USERNAME})" \
+ "Maintainer: ${MAINTAINER} (${TELEGRAM_USERNAME})" \
  "Read: <a href='https://blog.revengeos.com/we-need-developers/'>Tap here</a>" \
- "Donate: ${DONATE_URL}"
+ "Wanna donate? Do it <a href='${DONATE_URL}'>here</a>!"
 
 tg_groupcast "Pushed release announcement for ${DEVICENAME} (${TARGET_DEVICE}) in RevengeOS News."
